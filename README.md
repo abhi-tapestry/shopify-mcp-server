@@ -78,15 +78,15 @@ Create a `.env` file in the project root:
 
 ```
 SHOPIFY_SHOP_URL=your-store.myshopify.com
-SHOPIFY_API_KEY=your_api_key
-SHOPIFY_PASSWORD=your_api_password
+SHOPIFY_API_KEY=your_api_key_here
+SHOPIFY_PASSWORD=your_private_app_password_here
 ```
 
 Or if using an access token:
 
 ```
 SHOPIFY_SHOP_URL=your-store.myshopify.com
-SHOPIFY_ACCESS_TOKEN=your_access_token
+SHOPIFY_ACCESS_TOKEN=your_access_token_here
 ```
 
 #### Option B: Using a secure profile (recommended for production)
@@ -129,7 +129,7 @@ By default, the server runs on port 8080. To use a different port:
 
 ## 🔧 Configuring Claude Desktop
 
-To connect Claude Desktop to your Shopify MCP server:
+To add the Shopify MCP server to Claude Desktop:
 
 1. Open Claude Desktop's configuration file:
    ```bash
@@ -140,18 +140,23 @@ To connect Claude Desktop to your Shopify MCP server:
    notepad %APPDATA%\Claude\claude_desktop_config.json
    ```
 
-2. Add the Shopify MCP server configuration:
+2. Add the following Shopify configuration to your existing `mcpServers` section:
+
    ```json
    {
      "mcpServers": {
        "shopify": {
-         "command": "/full/path/to/shopify-mcp-server/run_server.sh",
-         "args": [],
-         "workingDir": "/full/path/to/shopify-mcp-server"
+         "command": "/Users/your-username/shopify-mcp-server/run_server.sh",
+         "workingDir": "/Users/your-username/shopify-mcp-server"
        }
      }
    }
    ```
+   
+   Important notes:
+   - Replace `/Users/your-username/` with the actual path to your project
+   - If you already have other MCP servers configured, just add the "shopify" entry to your existing "mcpServers" object
+   - The configuration above assumes you're using the default port (8080)
 
 3. Restart Claude Desktop to apply the changes
 
