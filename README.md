@@ -1,41 +1,43 @@
 # Shopify MCP Server for Claude
 
-A Model Context Protocol (MCP) server that enables Claude and other MCP-compatible AI assistants to interact with your Shopify store data. This integration allows AI assistants to directly access product catalogs, customer information, and order details, providing more accurate and contextual assistance for e-commerce tasks.
+A Model Context Protocol (MCP) server that enables Claude AI to seamlessly interact with your Shopify store data. With this integration, Claude can access product catalogs, customer information, and order details, providing more intelligent and contextual assistance for e-commerce tasks.
 
 <p align="center">
-  <img src="https://github.com/anthropics/mcp/raw/main/docs/assets/mcp-logo.png" alt="MCP Logo" width="150">
+  <img src="https://avatars.githubusercontent.com/u/182288589?s=200&v=4" alt="MCP Logo" width="150">
 </p>
 
 ## 🌟 Features
 
-- **Product Management**
-  - Retrieve complete product catalog with titles, descriptions, and pricing
-  - Access variant information including SKUs and inventory levels
-  - View product images and metadata
+- **Seamless Claude Integration**
+  - Access your Shopify store data directly within Claude conversations
+  - No need to copy-paste data or switch between applications
+  - Claude can analyze and reason about your store information
+
+- **Complete Product Access**
+  - Query your entire product catalog
+  - Access detailed product information, variants, and inventory
+  - Search products by title, vendor, or product type
 
 - **Customer Insights**
-  - Access customer profiles with contact information
-  - View customer purchase history and addresses
-  - Track total spent and order counts
+  - Retrieve customer profiles and purchase history
+  - Access contact information and shipping addresses
+  - View spending patterns and order frequency
 
-- **Order Processing**
-  - Retrieve order details including line items and totals
-  - Access shipping information and fulfillment status
-  - View financial status and payment information
-
-- **Search Capabilities**
-  - Search products by title, vendor, or product type
-  - Filter results based on specific criteria
+- **Order Management**
+  - Access order details, line items, and fulfillment status
+  - View payment information and shipping details
+  - Analyze order metrics and patterns
 
 - **Store Information**
-  - Access store metadata, currency, and timezone information
-  - Retrieve shop owner and contact details
+  - Access metadata about your Shopify store
+  - View currency, locale, and timezone settings
+  - Retrieve shop owner and business details
 
 ## 📋 Prerequisites
 
 - Python 3.10 or higher (Python 3.12 recommended)
-- A Shopify store with API access credentials (Admin API access)
-- [Claude Desktop](https://claude.ai/desktop) or any MCP-compatible AI assistant
+- A Shopify store with Admin API access credentials
+- [Claude Desktop](https://claude.ai/desktop) installed
 - Basic understanding of terminal commands
 
 ## 🚀 Quick Start
@@ -53,28 +55,31 @@ Create and activate a virtual environment:
 
 ```bash
 # Create virtual environment
-python -m venv .venv
+python -m venv .venv-py312
 
 # Activate on macOS/Linux
-source .venv/bin/activate
+source .venv-py312/bin/activate
 
 # Activate on Windows
-.venv\Scripts\activate
+.venv-py312\Scripts\activate
 ```
 
 ### 3. Install Dependencies
 
 ```bash
-pip install ShopifyAPI python-dotenv
+pip install ShopifyAPI fastmcp python-dotenv
 ```
 
 ### 4. Configure Shopify Credentials
 
-You have two options for configuring your Shopify API credentials:
-
-#### Option A: Using the .env file (quickest setup)
-
 Create a `.env` file in the project root:
+
+```
+SHOPIFY_SHOP_URL=your-store.myshopify.com
+SHOPIFY_ACCESS_TOKEN=your_access_token_here
+```
+
+Or for API key authentication:
 
 ```
 SHOPIFY_SHOP_URL=your-store.myshopify.com
@@ -82,23 +87,12 @@ SHOPIFY_API_KEY=your_api_key_here
 SHOPIFY_PASSWORD=your_private_app_password_here
 ```
 
-Or if using an access token:
-
-```
-SHOPIFY_SHOP_URL=your-store.myshopify.com
-SHOPIFY_ACCESS_TOKEN=your_access_token_here
-```
-
-#### Option B: Using a secure profile (recommended for production)
-
-Run the setup script which will guide you through the process:
+Alternatively, you can use the setup script for a more secure configuration:
 
 ```bash
 chmod +x setup_credentials.sh
 ./setup_credentials.sh
 ```
-
-This creates a secure `~/.shopify_profile` file with restricted permissions.
 
 ### 5. Test Your Configuration
 
@@ -109,148 +103,97 @@ chmod +x test_env.sh
 ./test_env.sh
 ```
 
-This checks if your credentials are properly loaded and accessible.
-
-### 6. Start the Server
-
-Make the server script executable and run it:
+### 6. Make the Server Executable
 
 ```bash
-chmod +x shopify_mcp.py
-chmod +x run_server.sh
-./run_server.sh
-```
-
-By default, the server runs on port 8080. To use a different port:
-
-```bash
-./run_server.sh --port 8888
+chmod +x claude_server.sh
 ```
 
 ## 🔧 Configuring Claude Desktop
 
 To add the Shopify MCP server to Claude Desktop:
 
-1. Open Claude Desktop's configuration file:
-   ```bash
-   # macOS
-   nano ~/Library/Application\ Support/Claude/claude_desktop_config.json
-   
-   # Windows
-   notepad %APPDATA%\Claude\claude_desktop_config.json
-   ```
+1. Open Claude Desktop and click on the settings icon
 
-2. Add the following Shopify configuration to your existing `mcpServers` section:
+2. In the MCP settings section, add a new server with these settings:
+   - Name: Shopify Store
+   - Command: /full/path/to/shopify-mcp-server/claude_server.sh
+   - Working Directory: /full/path/to/shopify-mcp-server
 
-   ```json
-   {
-     "mcpServers": {
-       "shopify": {
-         "command": "/Users/your-username/shopify-mcp-server/run_server.sh",
-         "args": []
-       }
-     }
-   }
-   ```
-   
-   Important notes:
-   - Replace `/Users/your-username/` with the actual full path to your project
-   - If you already have other MCP servers configured, just add the "shopify" entry to your existing "mcpServers" object
-   - The configuration above assumes you're using the default port (8080)
+   Make sure to replace `/full/path/to/` with your actual file path.
 
-3. Restart Claude Desktop to apply the changes
+3. Save the configuration and restart Claude Desktop
 
-4. In the Claude Desktop app, you should now see Shopify tools available for use
+4. Claude should now have access to your Shopify store data!
 
-## 🛠️ Available MCP Tools
+## 🧠 Using Shopify Tools with Claude
 
-The server exposes the following MCP tools to Claude:
+Once configured, you can ask Claude to use the Shopify tools in your conversations. Here are some examples:
 
-| Tool Name | Description | Parameters |
-|-----------|-------------|------------|
-| `get_product_list` | Retrieves a list of products | `limit`: Maximum number of products (default: 10) |
-| `get_customer_list` | Retrieves a list of customers | `limit`: Maximum number of customers (default: 10) |
-| `get_order_list` | Retrieves a list of orders | `limit`: Maximum number of orders (default: 10) |
-| `search_products` | Searches for products | `query`: Search term for products |
-| `get_store_info` | Retrieves store information | None |
+- "Show me the top 5 products in my store"
+- "Find all customers who have spent more than $100"
+- "Search for products made by vendor X"
+- "Get details about my recent orders"
+- "What's the average price of products in my catalog?"
 
-## 🔍 API Endpoints
-
-The server also exposes REST API endpoints that can be accessed directly:
-
-| Endpoint | Method | Description | Parameters |
-|----------|--------|-------------|------------|
-| `/health` | GET | Health check for the server | None |
-| `/api/products` | GET | Get list of products | `limit`: Number of products |
-| `/api/customers` | GET | Get list of customers | `limit`: Number of customers |
-| `/api/orders` | GET | Get list of orders | `limit`: Number of orders |
-| `/api/search` | GET | Search for products | `q`: Search query |
-| `/api/store` | GET | Get store information | None |
-| `/mcp` | POST | MCP protocol endpoint | JSON body with method and params |
+Claude will access your Shopify data through the MCP server and provide insightful responses based on your actual store information.
 
 ## 🔒 Security Best Practices
 
-- **Credential Protection**: API credentials are stored with restricted file permissions (600)
-- **No Plaintext in Config**: The wrapper script loads credentials at runtime
+- **Credential Protection**: Store API credentials with restricted file permissions (600)
+- **Read-Only Access**: The MCP server only retrieves data and cannot modify your store
 - **Minimal Access**: Configure your Shopify API access with the least privileges needed
-- **Local Only**: By default, the server listens only on localhost for security
-- **Regular Rotation**: Periodically rotate your API keys and tokens
+- **Local Only**: The server runs locally on your machine for maximum security
+- **Credential Rotation**: Periodically rotate your API keys and tokens
 
 ## ❓ Troubleshooting
 
-### Common Issues
+If you encounter issues with the Shopify MCP server:
 
-1. **Credentials Not Loading**
-   - Verify credentials exist in `.env` or `~/.shopify_profile`
-   - Check permissions on profile file: `ls -la ~/.shopify_profile`
-   - Run `./test_env.sh` to diagnose credential issues
+1. **Check your credentials**
+   - Verify your Shopify API credentials are correct in your `.env` file
+   - Make sure your shop URL is properly formatted (e.g., `your-store.myshopify.com`)
 
-2. **Connection Errors**
-   - Verify your Shopify URL is correct
-   - Ensure API keys are valid and have sufficient permissions
-   - Check if your IP is allowed in Shopify API settings
+2. **Verify Claude Desktop configuration**
+   - Ensure paths in the Claude Desktop settings are absolute and correct
+   - Check that the working directory is properly set
+   - Restart Claude Desktop after making configuration changes
 
-3. **Claude Desktop Integration**
-   - Ensure the path in `claude_desktop_config.json` is absolute and correct
-   - Verify Claude Desktop has been restarted after changes
-   - Check that the server scripts are executable
+3. **Check server execution**
+   - Make sure `claude_server.sh` is executable
+   - If you encounter permission issues, run `chmod +x claude_server.sh`
 
-### Debug Mode
+For more detailed setup information, refer to the [CLAUDE_SETUP.md](CLAUDE_SETUP.md) file.
 
-To run the server with verbose output:
+## 📚 Available MCP Tools
 
-```bash
-DEBUG=1 ./run_server.sh
-```
+The Shopify MCP server provides Claude with the following capabilities:
 
-## 🧠 How Claude Uses This Server
-
-Claude can use this server to:
-
-1. Look up product information when helping customers with product questions
-2. Access customer order history to provide personalized recommendations
-3. Review inventory levels when discussing product availability
-4. Search for products matching specific criteria
-5. Get store information for contextual understanding
-
-Example prompt for Claude:
-
-> "Use the Shopify tools to find all products from vendor 'Acme', and then summarize their price range and average inventory level."
+| Tool | Description |
+|------|-------------|
+| `get_products` | Retrieve a list of products from your Shopify store |
+| `get_product_details` | Get detailed information about a specific product |
+| `get_customers` | Retrieve a list of customers from your store |
+| `get_customer_details` | Get detailed information about a specific customer |
+| `get_orders` | Retrieve a list of orders from your store |
+| `search_products` | Search for products by name, type, or vendor |
+| `get_store_info` | Get information about your Shopify store |
 
 ## 🏗️ Project Structure
 
-- `shopify_mcp.py` - Main MCP server implementation
-- `run_server.sh` - Wrapper script for loading credentials and starting the server
+- `shopify_mcp_fastmcp.py` - Main MCP server implementation using FastMCP
+- `claude_server.sh` - Script that launches the MCP server for Claude
 - `setup_credentials.sh` - Helper script for secure credential configuration
 - `test_env.sh` - Diagnostic tool for verifying environment setup
 - `.env.example` - Example environment variables file
+- `CLAUDE_SETUP.md` - Detailed setup instructions for Claude Desktop
 
-## 🌐 Technical Details
+## 🌐 Learning More
 
-- **MCP Protocol**: Implements the [Model Context Protocol](https://github.com/anthropics/mcp) specification
-- **ShopifyAPI**: Uses the [Shopify Python API](https://github.com/Shopify/shopify_python_api) for authenticated access
-- **HTTP Server**: Built on Python's stdlib http.server module
-- **Security**: Implements credential isolation and permission restrictions
+- [Model Context Protocol Documentation](https://modelcontextprotocol.io/)
+- [Claude Desktop Documentation](https://claude.ai/docs/desktop)
+- [Shopify API Documentation](https://shopify.dev/docs/api)
+- [FastMCP Python Library](https://github.com/anthropics/mcp/tree/main/python)
 
 ## 📄 License
 
