@@ -1,11 +1,23 @@
-# Python-generated files
-__pycache__/
-*.py[oc]
-build/
-dist/
-wheels/
-*.egg-info
-
-# Virtual environments
-.venv
+# Environment variables
 .env
+
+# Python
+__pycache__/
+*.py[cod]
+*.class
+.venv/
+.venv-*/
+
+# Logs
+*.log
+shopify_mcp_debug.log
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Editor directories and files
+.idea/
+.vscode/
+*.swp
+*.swo

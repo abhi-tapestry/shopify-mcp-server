@@ -1,0 +1,13 @@
+# Shopify API credentials for MCP server
+# Copy this file to ~/.shopify_profile and update with your credentials
+
+# Your Shopify store URL
+export SHOPIFY_SHOP_URL="your-store.myshopify.com"
+
+# You can use either API key + password OR access token
+# Option 1: API key and password
+export SHOPIFY_API_KEY="your_api_key"
+export SHOPIFY_PASSWORD="your_password"
+
+# Option 2: Access token (preferred if available)
+export SHOPIFY_ACCESS_TOKEN="your_access_token" 
