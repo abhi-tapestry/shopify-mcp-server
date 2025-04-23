@@ -147,14 +147,14 @@ To add the Shopify MCP server to Claude Desktop:
      "mcpServers": {
        "shopify": {
          "command": "/Users/your-username/shopify-mcp-server/run_server.sh",
-         "workingDir": "/Users/your-username/shopify-mcp-server"
+         "args": []
        }
      }
    }
    ```
    
    Important notes:
-   - Replace `/Users/your-username/` with the actual path to your project
+   - Replace `/Users/your-username/` with the actual full path to your project
    - If you already have other MCP servers configured, just add the "shopify" entry to your existing "mcpServers" object
    - The configuration above assumes you're using the default port (8080)
 
