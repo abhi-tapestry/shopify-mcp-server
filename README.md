@@ -1,6 +1,6 @@
-# Shopify MCP Server for Claude
+# Python Shopify MCP Server for Claude
 
-A Model Context Protocol (MCP) server that enables Claude AI to seamlessly interact with your Shopify store data. With this integration, Claude can access product catalogs, customer information, and order details, providing more intelligent and contextual assistance for e-commerce tasks.
+A Python implementation of the Model Context Protocol (MCP) server that enables Claude AI to seamlessly interact with your Shopify store data. With this integration, Claude can access product catalogs, customer information, and order details, providing more intelligent and contextual assistance for e-commerce tasks.
 
 <p align="center">
   <img src="https://avatars.githubusercontent.com/u/182288589?s=200&v=4" alt="MCP Logo" width="150">
@@ -181,12 +181,19 @@ The Shopify MCP server provides Claude with the following capabilities:
 
 ## 🏗️ Project Structure
 
-- `shopify_mcp_fastmcp.py` - Main MCP server implementation using FastMCP
-- `claude_server.sh` - Script that launches the MCP server for Claude
+- `shopify_mcp_fastmcp.py` - Main Python MCP server implementation using FastMCP
+- `claude_server.sh` - Bash script that launches the Python MCP server for Claude
 - `setup_credentials.sh` - Helper script for secure credential configuration
 - `test_env.sh` - Diagnostic tool for verifying environment setup
 - `.env.example` - Example environment variables file
 - `CLAUDE_SETUP.md` - Detailed setup instructions for Claude Desktop
+
+## 🧪 Technology Stack
+
+- **Python**: Core implementation language (3.10+ compatible, 3.12 recommended)
+- **FastMCP**: Python library for efficient MCP implementation
+- **Shopify API**: Official Python client for Shopify API integration
+- **Python-dotenv**: For secure environment variable management
 
 ## 🌐 Learning More
 
